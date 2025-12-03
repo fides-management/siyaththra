@@ -44,6 +44,7 @@
             line-height: 1.5;
             display: flex;
             min-height: 100vh;
+            overflow: hidden;
         }
 
         /* Sidebar */
@@ -56,6 +57,10 @@
             flex-shrink: 0;
             transition: transform 0.3s ease;
             z-index: 100;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            overflow-y: auto;
         }
 
         .sidebar-header {
@@ -140,6 +145,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 16px;
         }
 
         .user-avatar {
@@ -163,12 +169,33 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 12px 20px;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+        }
+
         /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            height: 100vh;
         }
 
         /* Header */
@@ -180,6 +207,8 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: var(--shadow-sm);
+            flex-shrink: 0;
+            z-index: 10;
         }
 
         .header-left {
@@ -269,74 +298,8 @@
             flex: 1;
             padding: 24px;
             overflow-y: auto;
+            overflow-x: hidden;
         }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: var(--bg-secondary);
-            border-radius: var(--radius-md);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color);
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            box-shadow: var(--shadow-md);
-            border-color: var(--primary-color);
-        }
-
-        .stat-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .stat-title {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .icon-student { background-color: var(--info-color); }
-        .icon-teacher { background-color: var(--warning-color); }
-        .icon-total { background-color: var(--success-color); }
-        .icon-pending { background-color: var(--danger-color); }
-
-        .stat-value {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .stat-trend {
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .trend-up { color: var(--success-color); }
-        .trend-down { color: var(--danger-color); }
-        .trend-neutral { color: var(--text-light); }
 
         /* Main Table Section */
         .table-section {
@@ -345,6 +308,7 @@
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-color);
             overflow: hidden;
+            margin-top: 0;
         }
 
         .section-header {
@@ -452,6 +416,7 @@
         /* Table */
         .table-container {
             overflow-x: auto;
+            max-height: 500px;
         }
 
         .data-table {
@@ -547,6 +512,61 @@
             color: var(--text-primary);
         }
 
+        /* Pagination */
+        .pagination {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: rgba(249, 250, 251, 0.5);
+        }
+
+        .pagination-info {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination-btn {
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background-color: white;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background-color: var(--bg-primary);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 4px;
+        }
+
         /* Footer */
         .footer {
             padding: 16px 24px;
@@ -557,6 +577,25 @@
             justify-content: space-between;
             font-size: 0.875rem;
             color: var(--text-secondary);
+            flex-shrink: 0;
+        }
+
+        /* Custom scrollbar for content area */
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
         }
 
         /* Mobile Responsiveness */
@@ -577,16 +616,16 @@
                 display: block;
             }
             
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .table-container {
+                max-height: 450px;
+            }
+            
+            .sidebar:not(.active) {
+                overflow-y: hidden;
             }
         }
 
         @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .header, .content {
                 padding: 16px;
             }
@@ -603,6 +642,20 @@
             .data-table th, .data-table td {
                 padding: 12px 16px;
             }
+            
+            .table-container {
+                max-height: 400px;
+            }
+            
+            .pagination {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+            
+            .pagination-controls {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -612,6 +665,43 @@
             
             .user-name {
                 display: none;
+            }
+            
+            .table-container {
+                max-height: 350px;
+            }
+            
+            .pagination-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Ensure sidebar doesn't scroll on desktop when not needed */
+        @media (min-width: 1025px) {
+            .sidebar {
+                overflow-y: hidden;
+            }
+            
+            .sidebar:hover {
+                overflow-y: auto;
+            }
+            
+            .sidebar::-webkit-scrollbar {
+                width: 6px;
+            }
+            
+            .sidebar::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            
+            .sidebar::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 3px;
+            }
+            
+            .sidebar::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.3);
             }
         }
     </style>
@@ -696,6 +786,10 @@
                     <p>Administrator</p>
                 </div>
             </div>
+            <button class="logout-btn" id="logoutBtn">
+                <span class="material-icons">logout</span>
+                <span>Logout</span>
+            </button>
         </div>
     </nav>
 
@@ -714,14 +808,6 @@
             </div>
             
             <div class="header-actions">
-                <button class="header-action-btn">
-                    <span class="material-icons">notifications</span>
-                    <span class="badge">3</span>
-                </button>
-                <button class="header-action-btn">
-                    <span class="material-icons">mail</span>
-                    <span class="badge">5</span>
-                </button>
                 <button class="header-action-btn" id="refreshBtn">
                     <span class="material-icons">refresh</span>
                 </button>
@@ -735,66 +821,7 @@
 
         <!-- Content -->
         <main class="content">
-            <!-- Stats Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-title">Student Inquiries</div>
-                        <div class="stat-icon icon-student">
-                            <span class="material-icons">group</span>
-                        </div>
-                    </div>
-                    <div class="stat-value" id="studentCount">0</div>
-                    <div class="stat-trend trend-up">
-                        <span class="material-icons">trending_up</span>
-                        <span>+12% from last month</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-title">Teacher Inquiries</div>
-                        <div class="stat-icon icon-teacher">
-                            <span class="material-icons">school</span>
-                        </div>
-                    </div>
-                    <div class="stat-value" id="teacherCount">0</div>
-                    <div class="stat-trend trend-neutral">
-                        <span class="material-icons">remove</span>
-                        <span>No change from last month</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-title">Total Reservations</div>
-                        <div class="stat-icon icon-total">
-                            <span class="material-icons">inventory</span>
-                        </div>
-                    </div>
-                    <div class="stat-value" id="totalCount">0</div>
-                    <div class="stat-trend trend-up">
-                        <span class="material-icons">trending_up</span>
-                        <span>+8% from last month</span>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-title">Pending Actions</div>
-                        <div class="stat-icon icon-pending">
-                            <span class="material-icons">pending_actions</span>
-                        </div>
-                    </div>
-                    <div class="stat-value" id="pendingCount">0</div>
-                    <div class="stat-trend trend-down">
-                        <span class="material-icons">trending_down</span>
-                        <span>-5% from last week</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Table Section -->
+            <!-- Table Section (Stats cards removed) -->
             <div class="table-section">
                 <div class="section-header">
                     <div class="section-title">
@@ -854,6 +881,30 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <div class="pagination-info" id="paginationInfo">
+                        Showing 0-0 of 0
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="pagination-btn" id="firstPage">
+                            <span class="material-icons">first_page</span>
+                        </button>
+                        <button class="pagination-btn" id="prevPage">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <div class="page-numbers" id="pageNumbers">
+                            <!-- Page numbers will be populated by JavaScript -->
+                        </div>
+                        <button class="pagination-btn" id="nextPage">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                        <button class="pagination-btn" id="lastPage">
+                            <span class="material-icons">last_page</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </main>
 
@@ -865,20 +916,30 @@
     </div>
 
     <script>
-        // Mock Data
+        // Mock Data (Extended for pagination testing)
         const studentReservations = [
             { id: 1, type: 'student', fullName: 'Alice Johnson', phone: '123-456-7890', email: 'alice.j@uni.com', studyType: 'Group Project', date: '2025-12-10', duration: '3 hr', notes: 'Need whiteboard.', timeSlots: '10:00-13:00', status: 'confirmed' },
             { id: 2, type: 'student', fullName: 'Bob Smith', phone: '987-654-3210', email: 'bob.s@uni.com', studyType: 'Individual Study', date: '2025-12-15', duration: '1 hr', notes: 'Quiet area preferred.', timeSlots: '14:00-15:00', status: 'pending' },
-            { id: 5, type: 'student', fullName: 'Charlie Davis', phone: '333-222-1111', email: 'c.davis@uni.com', studyType: 'Exam Prep', date: '2026-01-02', duration: '4 hr', notes: 'Private room needed.', timeSlots: '09:00-13:00', status: 'confirmed' }
+            { id: 5, type: 'student', fullName: 'Charlie Davis', phone: '333-222-1111', email: 'c.davis@uni.com', studyType: 'Exam Prep', date: '2026-01-02', duration: '4 hr', notes: 'Private room needed.', timeSlots: '09:00-13:00', status: 'confirmed' },
+            { id: 7, type: 'student', fullName: 'Diana Ross', phone: '555-666-7777', email: 'diana@uni.com', studyType: 'Research', date: '2026-01-20', duration: '2 hr', notes: 'Library access needed.', timeSlots: '11:00-13:00', status: 'pending' },
+            { id: 8, type: 'student', fullName: 'Ethan Moore', phone: '888-999-0000', email: 'ethan@uni.com', studyType: 'Group Study', date: '2026-01-25', duration: '3 hr', notes: 'Large table required.', timeSlots: '14:00-17:00', status: 'confirmed' },
+            { id: 9, type: 'student', fullName: 'Fiona Clark', phone: '111-222-3333', email: 'fiona@uni.com', studyType: 'Thesis Work', date: '2026-02-01', duration: '5 hr', notes: 'Quiet room essential.', timeSlots: '09:00-14:00', status: 'pending' },
+            { id: 10, type: 'student', fullName: 'George Miller', phone: '444-555-6666', email: 'george@uni.com', studyType: 'Presentation Prep', date: '2026-02-05', duration: '2 hr', notes: 'Projector needed.', timeSlots: '15:00-17:00', status: 'confirmed' },
+            { id: 11, type: 'student', fullName: 'Hannah Wilson', phone: '777-888-9999', email: 'hannah@uni.com', studyType: 'Exam Revision', date: '2026-02-10', duration: '4 hr', notes: 'Study materials required.', timeSlots: '10:00-14:00', status: 'pending' }
         ];
 
         const teacherReservations = [
             { id: 3, type: 'teacher', fullName: 'Dr. Carol King', phone: '555-111-2222', email: 'carol@edu.com', subject: 'Calculus', classSize: 25, date: '2026-01-05', period: 'Semester', requirements: 'Projector and screen.', status: 'confirmed' },
             { id: 4, type: 'teacher', fullName: 'Mr. David Lee', phone: '444-333-5555', email: 'david@teach.com', subject: 'History', classSize: 15, date: '2026-01-10', period: 'Month', requirements: 'Flexible seating.', status: 'pending' },
-            { id: 6, type: 'teacher', fullName: 'Prof. Emily White', phone: '777-888-9999', email: 'emily@edu.com', subject: 'Physics', classSize: 30, date: '2026-01-15', period: 'Week', requirements: 'Lab equipment.', status: 'cancelled' }
+            { id: 6, type: 'teacher', fullName: 'Prof. Emily White', phone: '777-888-9999', email: 'emily@edu.com', subject: 'Physics', classSize: 30, date: '2026-01-15', period: 'Week', requirements: 'Lab equipment.', status: 'cancelled' },
+            { id: 12, type: 'teacher', fullName: 'Dr. Ian Brown', phone: '222-333-4444', email: 'ian@edu.com', subject: 'Chemistry', classSize: 20, date: '2026-02-15', period: 'Semester', requirements: 'Lab safety equipment.', status: 'confirmed' },
+            { id: 13, type: 'teacher', fullName: 'Prof. Julia Green', phone: '666-777-8888', email: 'julia@edu.com', subject: 'Biology', classSize: 18, date: '2026-02-20', period: 'Month', requirements: 'Microscopes available.', status: 'pending' },
+            { id: 14, type: 'teacher', fullName: 'Dr. Kevin Adams', phone: '999-000-1111', email: 'kevin@edu.com', subject: 'Mathematics', classSize: 22, date: '2026-02-25', period: 'Week', requirements: 'Whiteboard markers.', status: 'confirmed' },
+            { id: 15, type: 'teacher', fullName: 'Ms. Lisa Taylor', phone: '333-444-5555', email: 'lisa@edu.com', subject: 'English Literature', classSize: 16, date: '2026-03-01', period: 'Semester', requirements: 'Audio system.', status: 'pending' },
+            { id: 16, type: 'teacher', fullName: 'Mr. Michael Scott', phone: '777-666-5555', email: 'michael@edu.com', subject: 'Business Studies', classSize: 28, date: '2026-03-05', period: 'Month', requirements: 'Conference setup.', status: 'confirmed' }
         ];
 
-        const allReservations = [...studentReservations, ...teacherReservations];
+        let allReservations = [...studentReservations, ...teacherReservations];
 
         // DOM Elements
         const sidebar = document.getElementById('sidebar');
@@ -889,14 +950,20 @@
         const searchInput = document.getElementById('searchInput');
         const tableBody = document.getElementById('tableBody');
         const lastUpdateTime = document.getElementById('lastUpdateTime');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // Pagination elements
+        const paginationInfo = document.getElementById('paginationInfo');
+        const firstPageBtn = document.getElementById('firstPage');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const lastPageBtn = document.getElementById('lastPage');
+        const pageNumbersContainer = document.getElementById('pageNumbers');
 
-        // Initialize summary counts
-        function updateSummaryCards() {
-            document.getElementById('studentCount').textContent = studentReservations.length;
-            document.getElementById('teacherCount').textContent = teacherReservations.length;
-            document.getElementById('totalCount').textContent = allReservations.length;
-            document.getElementById('pendingCount').textContent = allReservations.filter(r => r.status === 'pending').length;
-        }
+        // Pagination variables
+        let currentPage = 1;
+        let rowsPerPage = 5;
+        let filteredReservations = [...allReservations];
 
         // Format date for display
         function formatDate(dateString) {
@@ -904,11 +971,15 @@
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         }
 
-        // Render table rows
-        function renderTableRows(reservations) {
+        // Render table rows for current page
+        function renderTableRows() {
             tableBody.innerHTML = '';
             
-            if (reservations.length === 0) {
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const pageReservations = filteredReservations.slice(startIndex, endIndex);
+            
+            if (pageReservations.length === 0) {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-light);">
@@ -920,7 +991,7 @@
                 return;
             }
             
-            reservations.forEach(reservation => {
+            pageReservations.forEach(reservation => {
                 const row = document.createElement('tr');
                 
                 // Type badge
@@ -975,6 +1046,81 @@
             });
         }
 
+        // Update pagination controls
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredReservations.length / rowsPerPage);
+            
+            // Update pagination info
+            const startIndex = (currentPage - 1) * rowsPerPage + 1;
+            const endIndex = Math.min(currentPage * rowsPerPage, filteredReservations.length);
+            paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${filteredReservations.length}`;
+            
+            // Update button states
+            firstPageBtn.disabled = currentPage === 1;
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+            lastPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+            
+            // Generate page numbers
+            pageNumbersContainer.innerHTML = '';
+            
+            // Always show first page
+            const firstPageBtn = document.createElement('button');
+            firstPageBtn.className = `pagination-btn ${currentPage === 1 ? 'active' : ''}`;
+            firstPageBtn.textContent = '1';
+            firstPageBtn.onclick = () => goToPage(1);
+            pageNumbersContainer.appendChild(firstPageBtn);
+            
+            // Show ellipsis if needed
+            if (currentPage > 3) {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.style.padding = '8px';
+                pageNumbersContainer.appendChild(ellipsis);
+            }
+            
+            // Show pages around current page
+            const startPage = Math.max(2, currentPage - 1);
+            const endPage = Math.min(totalPages - 1, currentPage + 1);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                if (i > 1 && i < totalPages) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.className = `pagination-btn ${currentPage === i ? 'active' : ''}`;
+                    pageBtn.textContent = i;
+                    pageBtn.onclick = () => goToPage(i);
+                    pageNumbersContainer.appendChild(pageBtn);
+                }
+            }
+            
+            // Show ellipsis if needed
+            if (currentPage < totalPages - 2) {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.style.padding = '8px';
+                pageNumbersContainer.appendChild(ellipsis);
+            }
+            
+            // Always show last page if there is more than one page
+            if (totalPages > 1) {
+                const lastPageBtn = document.createElement('button');
+                lastPageBtn.className = `pagination-btn ${currentPage === totalPages ? 'active' : ''}`;
+                lastPageBtn.textContent = totalPages;
+                lastPageBtn.onclick = () => goToPage(totalPages);
+                pageNumbersContainer.appendChild(lastPageBtn);
+            }
+        }
+
+        // Go to specific page
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredReservations.length / rowsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderTableRows();
+            updatePagination();
+        }
+
         // Filter and search functionality
         function filterTable() {
             const typeFilter = filterType.value;
@@ -1004,7 +1150,10 @@
                 );
             }
             
-            renderTableRows(filtered);
+            filteredReservations = filtered;
+            currentPage = 1; // Reset to first page when filtering
+            renderTableRows();
+            updatePagination();
         }
 
         // Update time display
@@ -1025,8 +1174,19 @@
         
         function deleteReservation(id) {
             if (confirm('Are you sure you want to delete this reservation?')) {
+                // Remove from all arrays
+                allReservations = allReservations.filter(r => r.id !== id);
+                filterTable(); // Re-filter and re-render
                 alert(`Deleted reservation #${id}`);
-                // In a real app, you would remove from data and re-render
+            }
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                alert('Logging out...');
+                // In a real app, you would redirect to login page
+                // window.location.href = '/login';
             }
         }
 
@@ -1036,7 +1196,6 @@
         });
 
         refreshBtn.addEventListener('click', () => {
-            // Simulate data refresh
             refreshBtn.querySelector('.material-icons').style.transform = 'rotate(360deg)';
             setTimeout(() => {
                 refreshBtn.querySelector('.material-icons').style.transform = 'rotate(0deg)';
@@ -1048,6 +1207,15 @@
         filterType.addEventListener('change', filterTable);
         filterStatus.addEventListener('change', filterTable);
         searchInput.addEventListener('input', filterTable);
+        
+        // Pagination event listeners
+        firstPageBtn.addEventListener('click', () => goToPage(1));
+        prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+        nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+        lastPageBtn.addEventListener('click', () => goToPage(Math.ceil(filteredReservations.length / rowsPerPage)));
+        
+        // Logout button
+        logoutBtn.addEventListener('click', logout);
 
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', (event) => {
@@ -1061,8 +1229,8 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            updateSummaryCards();
             filterTable();
+            updatePagination();
             updateTime();
             
             // Update time every second
@@ -1070,7 +1238,6 @@
             
             // Simulate real-time updates
             setInterval(() => {
-                // In a real app, this would fetch new data
                 updateTime();
             }, 30000);
         });

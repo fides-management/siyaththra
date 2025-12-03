@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Academy Admin Login</title>
+    <!-- Load Tailwind CSS CDN for modern, responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a custom purple color palette using CSS variables for clean design */
+        :root {
+            --primary-purple: #7c3aed; /* Deep Violet */
+            --primary-dark: #6d28d9;
+            --gray-light: #f9fafb;
+            --error-red: #ef4444;
+            --success-green: #10b981;
+        }
+
+        /* Set font and background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--gray-light);
+            min-height: 100vh;
+            padding: 0; /* Reset padding */
+            
+            /* --- UPDATED: Use Flexbox to manage header and content space --- */
+            display: flex; 
+            flex-direction: column; /* Stack header and wrapper vertically */
+        }
+
+        /* Styling for the Global Header */
+        .global-header {
+            background-color: var(--primary-purple);
+            color: white;
+            padding: 1rem 1.5rem;
+            /* margin-bottom removed, as space is handled by the wrapper padding and flex layout */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0; /* Ensures header does not shrink */
+        }
+
+        /* Centering container for the login card */
+        .login-center-wrapper {
+            /* --- UPDATED: Take up remaining space and center content --- */
+            display: flex;
+            justify-content: center; /* Horizontal centering */
+            align-items: center; /* Vertical centering */
+            flex-grow: 1; /* Causes wrapper to fill all space below the header */
+            padding: 20px;
+        }
+
+        /* Custom styles for the login card */
+        .login-card {
+            max-width: 440px;
+            width: 100%;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        /* Custom styling for the primary button */
+        .btn-primary {
+            background-color: var(--primary-purple);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Custom styling for input focus ring (using the purple primary color) */
+        input:focus {
+            border-color: var(--primary-purple) !important;
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. GLOBAL FULL-WIDTH HEADER (Updated for rounded logo and "Admin Panel" text) -->
+    <header class="global-header">
+        <div class="flex items-center space-x-3 max-w-7xl mx-auto">
+            <!-- JPEG Image Logo Placeholder (Now a rounded square - rounded-lg) -->
+            <img 
+                src="https://placehold.co/40x40/ffffff/7c3aed?text=L" 
+                alt="Future Academy Logo" 
+                class="h-10 w-10 rounded-lg bg-white p-1"
+            >
+            <!-- Institute/Panel Name with Admin Panel prominence -->
+            <span class="text-xl font-semibold text-white flex items-center space-x-2">
+                <span>Future Academy</span>
+                <span class="text-white opacity-75 hidden sm:inline">|</span>
+                <span class="font-light text-lg hidden sm:inline">Admin Panel</span>
+                <span class="text-lg font-semibold sm:hidden">Admin</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- Wrapper to center the login card -->
+    <div class="login-center-wrapper">
+        <div class="login-card">
+            
+            <div class="p-8">
+                <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Sign In</h1>
+                
+                <!-- Notification Area -->
+                <div id="notification-area" class="mb-4 hidden" role="alert">
+                    <!-- Content will be inserted by JavaScript -->
+                </div>
+
+                <form id="login-form">
+                    
+                    <!-- Email Field -->
+                    <div class="mb-5">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required 
+                            placeholder="admin@futureacademy.com"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+                        >
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="mb-6">
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            placeholder="••••••••"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+                        >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        class="btn-primary w-full text-white font-semibold py-2.5 rounded-lg shadow-md hover:bg-violet-700 focus:outline-none focus:ring-4 focus:ring-violet-300 transition duration-150"
+                    >
+                        Sign In
+                    </button>
+                </form>
+
+                <!-- Forgot Password Link -->
+                <div class="mt-4 text-center">
+                    <a href="#" class="text-sm font-medium text-violet-600 hover:text-violet-500 transition duration-150" id="forgot-password-link">
+                        Forgot Password?
+                    </a>
+                </div>
+            </div>
+
+            <footer class="p-4 text-center text-xs text-gray-500 border-t border-gray-100 mt-4">
+                &copy; 2025 Future Academy. All rights reserved.
+            </footer>
+        </div>
+    </div>
+
+    <!-- JavaScript for Production-Ready Logic and Notifications -->
+    <script>
+        const form = document.getElementById('login-form');
+        const notificationArea = document.getElementById('notification-area');
+        const forgotPasswordLink = document.getElementById('forgot-password-link');
+        
+        /**
+         * Displays a notification message above the form.
+         * @param {string} message - The message to display.
+         * @param {string} type - The type of notification: 'success', 'error', or 'info'.
+         */
+        function showNotification(message, type) {
+            let bgColor;
+            let textColor;
+            let iconHtml;
+
+            // Determine colors and icon based on notification type
+            switch (type) {
+                case 'success':
+                    bgColor = 'bg-success-green';
+                    textColor = 'text-green-800';
+                    iconHtml = '<svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+                    break;
+                case 'error':
+                    bgColor = 'bg-error-red';
+                    textColor = 'text-red-800';
+                    iconHtml = '<svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>';
+                    break;
+                case 'info':
+                default:
+                    bgColor = 'bg-blue-200';
+                    textColor = 'text-blue-800';
+                    iconHtml = '<svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 5a1 1 0 012 0v4a1 1 0 11-2 0V5zm1 10a1 1 0 100-2 1 1 0 000 2z"/></svg>';
+                    break;
+            }
+
+            // Set the content and style of the notification area
+            notificationArea.innerHTML = `
+                <div class="flex items-center p-3 rounded-lg ${bgColor} bg-opacity-10 border border-${type}-400 ${textColor}">
+                    ${iconHtml}
+                    <span class="text-sm font-medium">${message}</span>
+                </div>
+            `;
+            notificationArea.classList.remove('hidden');
+
+            // Automatically hide the notification after a few seconds unless it's an error
+            setTimeout(() => {
+                notificationArea.classList.add('hidden');
+                notificationArea.innerHTML = '';
+            }, 5000);
+        }
+
+        /**
+         * Handle form submission - Mock Login Logic
+         */
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Simple client-side validation
+            if (!email || !password) {
+                showNotification('Please enter both email and password.', 'error');
+                return;
+            }
+
+            // --- Mock Admin Credential Check ---
+            const MOCK_ADMIN_EMAIL = "admin@futureacademy.com";
+            const MOCK_ADMIN_PASSWORD = "password123";
+
+            if (email === MOCK_ADMIN_EMAIL && password === MOCK_ADMIN_PASSWORD) {
+                // Successful Login
+                showNotification('Login successful! Redirecting to Admin Dashboard...', 'success');
+                
+                // Simulate redirection to admin.html after a delay
+                setTimeout(() => {
+                    window.location.href = 'admin.html';
+                }, 1500);
+                
+            } else {
+                // Authentication Failure
+                showNotification('Invalid email or password. Please verify your credentials.', 'error');
+            }
+        });
+
+        /**
+         * Handle Forgot Password click - Updated message for clarity
+         */
+        forgotPasswordLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            showNotification('A password reset link has been sent to your email address (if registered). Check your spam folder.', 'info');
+        });
+    </script>
+</body>
+</html>
